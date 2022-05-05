@@ -1,0 +1,1 @@
+Hevent is an event library that only focuses on Linux epoll. Some codes refer to redis.

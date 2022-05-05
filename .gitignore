@@ -1,0 +1,7 @@
+.*.swp
+*.o
+*.d
+libhevent.a
+echo
+.vscode/*
+.idea/*

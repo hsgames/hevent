@@ -416,3 +416,29 @@ ssize_t hnet_sendto(int fd, void *buf, size_t len, struct sockaddr_storage *sa)
 {
     return sendto(fd, buf, len, 0, (struct sockaddr*)sa, sizeof(*sa));
 }
+
+void hnet_set_mmsghdr(void *bufs, size_t len, unsigned int vlen, 
+    struct sockaddr_storage *sas, struct mmsghdr *msgs, struct iovec *iovecs)
+{
+    unsigned int i;
+
+    for (i = 0; i < vlen; i++) {
+        iovecs[i].iov_base = (char*)bufs + i * len;
+        iovecs[i].iov_len = len;
+        msgs[i].msg_hdr.msg_iov = &iovecs[i];
+        msgs[i].msg_hdr.msg_iovlen = 1;
+        msgs[i].msg_hdr.msg_name = &sas[i];
+        msgs[i].msg_hdr.msg_namelen = sizeof(sas[i]);
+    }
+}
+
+int hnet_recvmmsg(int fd, struct mmsghdr *msgs, unsigned int vlen)
+{
+    int retval;
+
+    retval = recvmmsg(fd, msgs, vlen, 0, NULL);
+    if (retval == -1) {
+        return HNET_ERR;
+    }
+    return retval;
+}

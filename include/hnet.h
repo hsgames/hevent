@@ -16,6 +16,8 @@ extern "C" {
 
 struct addrinfo;
 struct sockaddr_storage;
+struct mmsghdr;
+struct iovec;
 
 int hnet_tcp_nonblock_connect(char *err, char *addr, int port);
 int hnet_tcp_server(char *err, int port, char *bindaddr, int backlog, int reuse_port);
@@ -33,6 +35,9 @@ int hnet_udp6_server(char *err, int port, char *bindaddr, int reuse_port);
 int hnet_udp_nonblock_sendto(char *err, char *addr, int port, void *buf, size_t len, ssize_t *written);
 ssize_t hnet_recvfrom(int fd, void *buf, size_t len, struct sockaddr_storage *sa);
 ssize_t hnet_sendto(int fd, void *buf, size_t len, struct sockaddr_storage *sa);
+void hnet_set_mmsghdr(void *bufs, size_t len, unsigned int vlen, 
+    struct sockaddr_storage *sas, struct mmsghdr *msgs, struct iovec *iovecs);
+int hnet_recvmmsg(int fd, struct mmsghdr *msgs, unsigned int vlen);
 void hnet_get_ip_port(struct sockaddr_storage *sa, char *ip, size_t ip_len, int *port);
 
 #ifdef __cplusplus

@@ -58,7 +58,7 @@ he_event_loop *he_create_event_loop(int setsize, long long update_ms,
 void he_delete_event_loop(he_event_loop *event_loop);
 void he_stop(he_event_loop *event_loop);
 int he_create_file_event(he_event_loop *event_loop, int fd, int mask,
-        he_file_proc *proc, void *client_data);
+    he_file_proc *proc, void *client_data);
 void he_delete_file_event(he_event_loop *event_loop, int fd, int mask);
 int he_process_events(he_event_loop *event_loop);
 void he_main(he_event_loop *event_loop);
